@@ -1,3 +1,5 @@
+package lesson6;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -8,7 +10,7 @@
  * @author kevi2860
  */
 public class GuessingGame extends javax.swing.JFrame {
-
+    GuessMachine machine = new GuessMachine();
     /**
      * Creates new form GuessingGame
      */
@@ -46,7 +48,7 @@ public class GuessingGame extends javax.swing.JFrame {
 
         lblResult.setBackground(new java.awt.Color(204, 204, 255));
         lblResult.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lblResult.setText("jLabel2");
+        lblResult.setText("");
         lblResult.setOpaque(true);
 
         lblatt.setBackground(new java.awt.Color(204, 204, 255));
@@ -60,40 +62,40 @@ public class GuessingGame extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1)
-                        .addGap(35, 35, 35)
-                        .addComponent(txtGuess, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
-                        .addComponent(btnGuess))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(77, 77, 77)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblResult, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblatt, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblAttempts)))
-                .addContainerGap(43, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                        .addContainerGap()
+                                        .addComponent(jLabel1)
+                                        .addGap(35, 35, 35)
+                                        .addComponent(txtGuess, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(33, 33, 33)
+                                        .addComponent(btnGuess))
+                                .addGroup(layout.createSequentialGroup()
+                                        .addGap(77, 77, 77)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(lblResult, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(lblatt, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lblAttempts)))
+                        .addContainerGap(43, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtGuess, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnGuess))
-                .addGap(56, 56, 56)
-                .addComponent(lblResult)
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblatt)
-                    .addComponent(lblAttempts))
-                .addContainerGap(72, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel1)
+                                .addComponent(txtGuess, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnGuess))
+                        .addGap(56, 56, 56)
+                        .addComponent(lblResult)
+                        .addGap(29, 29, 29)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(lblatt)
+                                .addComponent(lblAttempts))
+                        .addContainerGap(72, Short.MAX_VALUE))
         );
 
         pack();
@@ -101,8 +103,17 @@ public class GuessingGame extends javax.swing.JFrame {
 
     private void btnGuessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuessActionPerformed
         int number = Integer.parseInt(txtGuess.getText());
-        lblResult.setText("You guessed a "+ number);
-        lblAttempts.setText(" "+1);
+        if (machine.setGuess(number)) {
+            lblResult.setText("You guessed " + number + machine.giveHint());
+            lblAttempts.setText("" + machine.getNumGuess());
+        }        
+        else {
+            lblResult.setText("Invalid guess");
+                }
+        if (machine.giveHint().equals (". You got it!"))
+                btnGuess.setEnabled(false);
+    
+
         
     }//GEN-LAST:event_btnGuessActionPerformed
 

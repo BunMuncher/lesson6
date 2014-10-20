@@ -1,3 +1,5 @@
+package lesson6;
+
 public class employee {
 
     private String name;
@@ -12,7 +14,7 @@ public class employee {
     }
 
     public String getTypeRules() {
-        return "1 or 2";
+        return "1 for fulltime or 2 for parttime";
     }
 
     public String getNameRules() {
@@ -56,5 +58,26 @@ public class employee {
         }
         else
             return false;
+    }
+    public boolean setHours(int hrs){
+        boolean hoursOK = (hrs >= 1 && hrs <= 60);
+        if(hoursOK){
+            hours = hrs;
+            return true;
+        }
+        else
+            return false;
+    }
+    public String getName(){
+        return name;
+    }
+    public double getPay(){
+        double pay;
+        boolean noOverTime = (hours<=40 || type == 1);
+        if (noOverTime)
+            pay = rate * hours;
+        else 
+            pay = (hours-40) *(rate * 2) + rate * 40;
+        return pay;
     }
 }
